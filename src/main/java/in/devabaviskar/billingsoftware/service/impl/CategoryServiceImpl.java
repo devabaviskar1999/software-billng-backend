@@ -25,19 +25,17 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryResponse> read() {
-       List<CategoryEntity> categories = categoryRepository.findAll();
-       List<CategoryResponse> categoryResponses = categories.stream().map((category) -> CategoryResponse.builder().name(category.getName())
-               .description(category.getDescription()).bgColor(category.getBgColor()).createdAt(category.getCreatedAt())
-               .updatedAt(category.getUpdatedAt()).imgUrl(category.getImgUrl()).build()
-       ).toList();
-       return categoryResponses;
+        List<CategoryEntity> categories = categoryRepository.findAll();
+//       List<CategoryResponse> categoryResponses = categories.stream().map((category) -> CategoryResponse.builder().name(category.getName())
+//               .description(category.getDescription()).bgColor(category.getBgColor()).createdAt(category.getCreatedAt())
+//               .updatedAt(category.getUpdatedAt()).imgUrl(category.getImgUrl()).build()
+//       ).toList(); //this is long appraoch we already have created a method for convert CategoryEntity into CategoryResponse
+
+        return categories.stream().map(categoryEntity -> convertToResponse(categoryEntity)).toList();
     }
 
     private CategoryResponse convertToResponse(CategoryEntity newCategory) {
-        return CategoryResponse.builder().categoryId(newCategory.getCategoryId())
-                .name(newCategory.getName()).description(newCategory.getDescription())
-                .bgColor(newCategory.getBgColor()).imgUrl(newCategory.getImgUrl())
-                .createdAt(newCategory.getCreatedAt()).updatedAt(newCategory.getUpdatedAt()).build();
+        return CategoryResponse.builder().categoryId(newCategory.getCategoryId()).name(newCategory.getName()).description(newCategory.getDescription()).bgColor(newCategory.getBgColor()).imgUrl(newCategory.getImgUrl()).createdAt(newCategory.getCreatedAt()).updatedAt(newCategory.getUpdatedAt()).build();
     }
 
     private CategoryEntity convertToEntity(CategoryRequest request) {

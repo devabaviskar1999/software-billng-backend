@@ -17,12 +17,12 @@ public class CategoryController {
     private final CategoryService categoryService;
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryResponse add(@RequestBody CategoryRequest request){
+    public CategoryResponse addCategory(@RequestBody CategoryRequest request){
            return categoryService.add(request);
     }
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<CategoryResponse> read(){
+    public List<CategoryResponse> fetchCategories(){
         return categoryService.read();
     }
 }
